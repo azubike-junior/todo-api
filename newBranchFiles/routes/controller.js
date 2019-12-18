@@ -1,16 +1,15 @@
 const data = require('../data')
 
 const getTodos = (req, res) => {
-     res.status(200).json(data)
+     return res.status(200).json(data)
 }
 
 const getTodoById = (req, res) => {
     let found = data.find(item => item.id === parseInt(req.params.id));
-    console.log(found)
     if (found) {
-        res.status(200).json(found)
+        return res.status(200).json(found)
     } else {
-        res.sendStatus(404)
+        return res.sendStatus(404)
     }
 }
 
@@ -31,18 +30,24 @@ const createTodo = (req, res) => {
 
      data.push(newItem)
 
-     res.status(200).json(data)
+     return res.status(200).json(data)
 }
 
 const updateTodo = (req, res) => {
-    let found = data.find(item => item.id === parseInt(req.params.id))
+    const {
+        id,
+        title,
+        order,
+        completed
+    } = req.body
+    let found = data.find(item => item.id === id)
 
     if (found) {
         let updated = {
             id: found.id,
-            title: req.body.title,
-            order: req.body.order,
-            completed: req.body.completed,
+            title: title,
+            order: order,
+            completed: completed,
             createdOn: new Date()
         };
 
@@ -50,22 +55,21 @@ const updateTodo = (req, res) => {
 
         data.splice(targetIndex, 1, updated)
 
-        res.sendStatus(204)
+        return res.sendStatus(204)
     } else {
-        res.sendStatus(404)
+        return res.sendStatus(404)
     }
 }
 
 const deleteTodo = (req, res) =>{
     let found = data.find(item => item.id === parseInt(req.params.id))
-
     if (found) {
         let targetIndex = data.indexOf(found);
         data.splice(targetIndex, 1)
 
-        res.sendStatus(204)
+        return res.sendStatus(204)
     } else {
-        res.sendStatus(404)
+        return res.sendStatus(404)
     }
 }
 
