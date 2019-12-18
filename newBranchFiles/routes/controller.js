@@ -29,11 +29,17 @@ const createTodo = (req, res) => {
      }
 
      data.push(newItem)
+
      return res.status(200).json(data)
 }
 
 const updateTodo = (req, res) => {
-    const {id, title, order, completed} = req.body
+    const {
+        id,
+        title,
+        order,
+        completed
+    } = req.body
     let found = data.find(item => item.id === id)
 
     if (found) {
@@ -57,7 +63,6 @@ const updateTodo = (req, res) => {
 
 const deleteTodo = (req, res) =>{
     let found = data.find(item => item.id === parseInt(req.params.id))
-
     if (found) {
         let targetIndex = data.indexOf(found);
         data.splice(targetIndex, 1)

@@ -1,12 +1,13 @@
 const express = require('express');
-const router = express.Router();    
+const router = express.Router();
+
 const controller = require('./controller')
 
-
+router.route("/todo/:id").get(controller.getTodoById);
 
 router.get('/todos', controller.getTodos)
 
-router.get('/todo/:id', controller.getTodoById)
+// router.get('/todo/:id', controller.getTodoById)
 
 router.post('/todo', controller.createTodo)
 
